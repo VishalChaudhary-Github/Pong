@@ -73,6 +73,7 @@ pygame.mixer.music.load('bg_music.mp3')
 pygame.mixer.music.play(-1)
 
 clock = pygame.time.Clock()
+score_reset = False
 
 running = True
 while running:
@@ -97,6 +98,8 @@ while running:
 
             if event.key == pygame.K_SPACE:
                 ball.movement = True
+            if event.key == pygame.K_r:
+                score_reset = True
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_w or event.key == pygame.K_s:
@@ -113,6 +116,10 @@ while running:
         ball.movement = False
 
     ball.update()
+    if score_reset:
+        player1.score = 0
+        player2.score = 0
+        score_reset = False
 
     if pygame.sprite.collide_rect(ball, player2):
         ball.speed_x = -10
@@ -121,7 +128,7 @@ while running:
 
     # Rendering the Graphics
     game_window.fill((69, 90, 170))
-    pygame.draw.line(game_window, (255, 255, 255), (400, 0), (400, 500), 1)
+    pygame.draw.line(game_window, (255, 255, 255), (400, 35), (400, 500), 1)
 
     player1.draw(game_window)
     player2.draw(game_window)
